@@ -9,16 +9,30 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D myRb;
 
+    public bool grounded;
+    //LayerMask provides a selection of layers of which we created player and ground
+    public LayerMask isGround;
+
+    private Collider2D myCollider;
+
     // Start is called before the first frame update
     void Start()
     {
         //Get a reference to the rigidbody2D that is attached to the player
         myRb = GetComponent<Rigidbody2D>();
+
+        myCollider = GetComponent<Collider2D>();
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        //if collider attached to player is touching ground give the ability to jump
+        //otherwise you could jump infinitly thus making the game preety easy.
+        grounded = Physics2D.IsTouchingLayers(myCollider, isGround);
+
         Move();
         Jump2();
     }
@@ -28,10 +42,13 @@ public class PlayerController : MonoBehaviour
         myRb.velocity = new Vector2(moveSpeed, myRb.velocity.y);
     }
 
-    //For Mobile Android
+    //For Mobile Android gets called via button UI onClick
     public void Jump()
     {
-        myRb.velocity = new Vector2(myRb.velocity.x, jumpForce);
+        if(grounded == true)
+        {
+            myRb.velocity = new Vector2(myRb.velocity.x, jumpForce);
+        }
     }
 
     //For PC
@@ -40,9 +57,13 @@ public class PlayerController : MonoBehaviour
 
     public void Jump2()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(grounded == true)
         {
-            myRb.velocity = new Vector2(myRb.velocity.x, jumpForce);
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                myRb.velocity = new Vector2(myRb.velocity.x, jumpForce);
+            }
         }
     }
+
 }
