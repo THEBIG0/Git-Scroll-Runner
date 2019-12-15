@@ -13,13 +13,15 @@ public class PlatformGenerator : MonoBehaviour
     public float distanceBetweenMin;
     public float distanceBetweenMax;
 
+    public GameObject[] thePlatforms;
+    private int platformSelector;
 
     // Start is called before the first frame update
     void Start()
     {
         //gets the platform width from the boxcollider attached to platform
         platformWidth = thePlatform.GetComponent<BoxCollider2D>().size.x;
-
+        Debug.Log(thePlatforms.Length);
     }
 
     // Update is called once per frame
@@ -32,7 +34,10 @@ public class PlatformGenerator : MonoBehaviour
 
             transform.position = new Vector3(transform.position.x + platformWidth + distanceBetween, transform.position.y, transform.position.z);
 
-            Instantiate(thePlatform, transform.position, transform.rotation);
+            platformSelector = Random.Range(0, thePlatforms.Length);
+
+            //Instantiate(thePlatform, transform.position, transform.rotation);
+            Instantiate(thePlatforms[platformSelector], transform.position, transform.rotation);
         }
     }
 }

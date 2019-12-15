@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -35,6 +36,7 @@ public class PlayerController : MonoBehaviour
 
         Move();
         Jump2();
+        FallOffPlatform();
     }
 
     void Move()
@@ -63,6 +65,15 @@ public class PlayerController : MonoBehaviour
             {
                 myRb.velocity = new Vector2(myRb.velocity.x, jumpForce);
             }
+        }
+    }
+
+    //If the position of the player falls below -2.5f reset game.
+    public void FallOffPlatform()
+    {
+        if(transform.position.y < -2.5f)
+        {
+            SceneManager.LoadScene("Main");
         }
     }
 

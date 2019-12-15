@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class Item : MonoBehaviour
 {
     private ScoreManager sm;
@@ -17,9 +17,15 @@ public class Item : MonoBehaviour
     {
        if(other.gameObject.name == "Player")
        {
-           Debug.Log("Collided with Player");
+           Debug.Log("Collided with Coin");
            sm.AddToScore(IncrementScore);
-           gameObject.SetActive(false) ;
+           gameObject.SetActive(false);
+
+           if(gameObject.name == "Bomb")
+           {
+               Debug.Log("Collided with Bomb");
+               SceneManager.LoadScene("Main");
+           }
        }
     }
 }
